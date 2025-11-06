@@ -1,1 +1,372 @@
-import 'package:flutter/material.dart';\n\nclass MarketScreen extends StatefulWidget {\n  const MarketScreen({super.key});\n\n  @override\n  State<MarketScreen> createState() => _MarketScreenState();\n}\n\nclass _MarketScreenState extends State<MarketScreen> with SingleTickerProviderStateMixin {\n  late TabController _tabController;\n\n  @override\n  void initState() {\n    super.initState();\n    _tabController = TabController(length: 3, vsync: this);\n  }\n\n  @override\n  void dispose() {\n    _tabController.dispose();\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return Scaffold(\n      appBar: AppBar(\n        title: const Text('Nexora Market'),\n        actions: [\n          IconButton(\n            icon: const Icon(Icons.search),\n            onPressed: () {},\n          ),\n          IconButton(\n            icon: const Icon(Icons.shopping_cart_outlined),\n            onPressed: () {},\n          ),\n        ],\n        bottom: TabBar(\n          controller: _tabController,\n          indicatorColor: const Color(0xFF6C63FF),\n          labelColor: const Color(0xFF6C63FF),\n          unselectedLabelColor: Colors.grey,\n          tabs: const [\n            Tab(text: 'Freelancers'),\n            Tab(text: 'Products'),\n            Tab(text: 'Services'),\n          ],\n        ),\n      ),\n      body: TabBarView(\n        controller: _tabController,\n        children: [\n          _buildFreelancersTab(),\n          _buildProductsTab(),\n          _buildServicesTab(),\n        ],\n      ),\n      floatingActionButton: FloatingActionButton.extended(\n        onPressed: () {},\n        backgroundColor: const Color(0xFF6C63FF),\n        icon: const Icon(Icons.add, color: Colors.white),\n        label: const Text(\n          'Start Selling',\n          style: TextStyle(color: Colors.white),\n        ),\n      ),\n    );\n  }\n\n  Widget _buildFreelancersTab() {\n    return ListView.builder(\n      padding: const EdgeInsets.all(16),\n      itemCount: 10,\n      itemBuilder: (context, index) {\n        final services = ['UI/UX Design', 'Web Development', 'Content Writing', 'Video Editing', 'SEO Marketing'];\n        final prices = ['\$50/hr', '\$75/hr', '\$30/hr', '\$40/hr', '\$45/hr'];\n        final ratings = ['4.9', '5.0', '4.8', '4.7', '4.9'];\n        \n        return Container(\n          margin: const EdgeInsets.only(bottom: 16),\n          padding: const EdgeInsets.all(16),\n          decoration: BoxDecoration(\n            color: Colors.white,\n            borderRadius: BorderRadius.circular(12),\n            border: Border.all(color: Colors.grey[200]!),\n            boxShadow: [\n              BoxShadow(\n                color: Colors.black.withOpacity(0.05),\n                blurRadius: 5,\n                offset: const Offset(0, 2),\n              ),\n            ],\n          ),\n          child: Column(\n            children: [\n              Row(\n                children: [\n                  CircleAvatar(\n                    radius: 30,\n                    backgroundColor: const Color(0xFF6C63FF),\n                    child: Text(\n                      'F${index + 1}',\n                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),\n                    ),\n                  ),\n                  const SizedBox(width: 16),\n                  Expanded(\n                    child: Column(\n                      crossAxisAlignment: CrossAxisAlignment.start,\n                      children: [\n                        Row(\n                          children: [\n                            Text(\n                              'Freelancer ${index + 1}',\n                              style: const TextStyle(\n                                fontSize: 16,\n                                fontWeight: FontWeight.bold,\n                              ),\n                            ),\n                            const SizedBox(width: 4),\n                            if (index % 3 == 0)\n                              const Icon(Icons.verified, size: 16, color: Colors.blue),\n                          ],\n                        ),\n                        const SizedBox(height: 4),\n                        Text(\n                          services[index % services.length],\n                          style: TextStyle(\n                            fontSize: 13,\n                            color: Colors.grey[600],\n                          ),\n                        ),\n                        const SizedBox(height: 4),\n                        Row(\n                          children: [\n                            const Icon(Icons.star, size: 14, color: Color(0xFFFFD700)),\n                            const SizedBox(width: 4),\n                            Text(\n                              '${ratings[index % ratings.length]} (${50 + index * 10} reviews)',\n                              style: const TextStyle(fontSize: 12),\n                            ),\n                          ],\n                        ),\n                      ],\n                    ),\n                  ),\n                  Text(\n                    prices[index % prices.length],\n                    style: const TextStyle(\n                      fontSize: 18,\n                      fontWeight: FontWeight.bold,\n                      color: Color(0xFF6C63FF),\n                    ),\n                  ),\n                ],\n              ),\n              const SizedBox(height: 12),\n              const Text(\n                'Professional designer with 5+ years experience. Specialized in mobile apps and web design. Fast delivery guaranteed.',\n                style: TextStyle(fontSize: 13, color: Colors.black87),\n                maxLines: 2,\n                overflow: TextOverflow.ellipsis,\n              ),\n              const SizedBox(height: 12),\n              Row(\n                children: [\n                  Expanded(\n                    child: OutlinedButton.icon(\n                      onPressed: () {},\n                      icon: const Icon(Icons.chat, size: 18),\n                      label: const Text('Chat'),\n                      style: OutlinedButton.styleFrom(\n                        foregroundColor: const Color(0xFF6C63FF),\n                      ),\n                    ),\n                  ),\n                  const SizedBox(width: 12),\n                  Expanded(\n                    child: ElevatedButton.icon(\n                      onPressed: () {},\n                      icon: const Icon(Icons.work, size: 18),\n                      label: const Text('Hire'),\n                      style: ElevatedButton.styleFrom(\n                        backgroundColor: const Color(0xFF6C63FF),\n                        foregroundColor: Colors.white,\n                      ),\n                    ),\n                  ),\n                ],\n              ),\n            ],\n          ),\n        );\n      },\n    );\n  }\n\n  Widget _buildProductsTab() {\n    return GridView.builder(\n      padding: const EdgeInsets.all(16),\n      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(\n        crossAxisCount: 2,\n        childAspectRatio: 0.75,\n        crossAxisSpacing: 12,\n        mainAxisSpacing: 12,\n      ),\n      itemCount: 20,\n      itemBuilder: (context, index) {\n        final products = ['Wireless Headphones', 'Smart Watch', 'Laptop Stand', 'Phone Case', 'USB Cable'];\n        final prices = ['\$79.99', '\$199.99', '\$34.99', '\$14.99', '\$9.99'];\n        \n        return Container(\n          decoration: BoxDecoration(\n            color: Colors.white,\n            borderRadius: BorderRadius.circular(12),\n            border: Border.all(color: Colors.grey[200]!),\n          ),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.start,\n            children: [\n              Expanded(\n                child: Container(\n                  decoration: BoxDecoration(\n                    color: Colors.grey[200],\n                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),\n                  ),\n                  child: Center(\n                    child: Icon(\n                      Icons.inventory_2_outlined,\n                      size: 60,\n                      color: Colors.grey[400],\n                    ),\n                  ),\n                ),\n              ),\n              Padding(\n                padding: const EdgeInsets.all(12),\n                child: Column(\n                  crossAxisAlignment: CrossAxisAlignment.start,\n                  children: [\n                    Text(\n                      products[index % products.length],\n                      style: const TextStyle(\n                        fontSize: 14,\n                        fontWeight: FontWeight.w600,\n                      ),\n                      maxLines: 2,\n                      overflow: TextOverflow.ellipsis,\n                    ),\n                    const SizedBox(height: 4),\n                    Row(\n                      children: [\n                        const Icon(Icons.star, size: 14, color: Color(0xFFFFD700)),\n                        const SizedBox(width: 4),\n                        Text(\n                          '4.${5 + (index % 4)}',\n                          style: const TextStyle(fontSize: 12),\n                        ),\n                        const Spacer(),\n                        Text(\n                          prices[index % prices.length],\n                          style: const TextStyle(\n                            fontSize: 16,\n                            fontWeight: FontWeight.bold,\n                            color: Color(0xFF6C63FF),\n                          ),\n                        ),\n                      ],\n                    ),\n                  ],\n                ),\n              ),\n            ],\n          ),\n        );\n      },\n    );\n  }\n\n  Widget _buildServicesTab() {\n    return ListView.builder(\n      padding: const EdgeInsets.all(16),\n      itemCount: 10,\n      itemBuilder: (context, index) {\n        final services = [\n          'Professional Logo Design',\n          'Website Development',\n          'Social Media Marketing',\n          'Video Production',\n          'SEO Optimization',\n        ];\n        final descriptions = [\n          'Custom logo design with unlimited revisions',\n          'Full-stack web development from scratch',\n          'Grow your brand with targeted campaigns',\n          'Professional video editing and effects',\n          'Rank higher on search engines',\n        ];\n        final prices = ['Starting at \$150', 'Starting at \$500', 'Starting at \$200', 'Starting at \$300', 'Starting at \$250'];\n        \n        return Container(\n          margin: const EdgeInsets.only(bottom: 16),\n          padding: const EdgeInsets.all(16),\n          decoration: BoxDecoration(\n            color: Colors.white,\n            borderRadius: BorderRadius.circular(12),\n            border: Border.all(color: Colors.grey[200]!),\n          ),\n          child: Row(\n            children: [\n              Container(\n                width: 80,\n                height: 80,\n                decoration: BoxDecoration(\n                  color: const Color(0xFF6C63FF).withOpacity(0.1),\n                  borderRadius: BorderRadius.circular(12),\n                ),\n                child: const Icon(\n                  Icons.design_services,\n                  size: 40,\n                  color: Color(0xFF6C63FF),\n                ),\n              ),\n              const SizedBox(width: 16),\n              Expanded(\n                child: Column(\n                  crossAxisAlignment: CrossAxisAlignment.start,\n                  children: [\n                    Text(\n                      services[index % services.length],\n                      style: const TextStyle(\n                        fontSize: 15,\n                        fontWeight: FontWeight.bold,\n                      ),\n                    ),\n                    const SizedBox(height: 4),\n                    Text(\n                      descriptions[index % descriptions.length],\n                      style: TextStyle(\n                        fontSize: 12,\n                        color: Colors.grey[600],\n                      ),\n                      maxLines: 2,\n                      overflow: TextOverflow.ellipsis,\n                    ),\n                    const SizedBox(height: 8),\n                    Row(\n                      children: [\n                        const Icon(Icons.verified_user, size: 14, color: Colors.green),\n                        const SizedBox(width: 4),\n                        Text(\n                          prices[index % prices.length],\n                          style: const TextStyle(\n                            fontSize: 14,\n                            fontWeight: FontWeight.bold,\n                            color: Color(0xFF6C63FF),\n                          ),\n                        ),\n                      ],\n                    ),\n                  ],\n                ),\n              ),\n            ],\n          ),\n        );\n      },\n    );\n  }\n}\n
+import 'package:flutter/material.dart';
+
+class MarketScreen extends StatefulWidget {
+  const MarketScreen({super.key});
+
+  @override
+  State<MarketScreen> createState() => _MarketScreenState();
+}
+
+class _MarketScreenState extends State<MarketScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Nexora Market'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart_outlined),
+            onPressed: () {},
+          ),
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: const Color(0xFF6C63FF),
+          labelColor: const Color(0xFF6C63FF),
+          unselectedLabelColor: Colors.grey,
+          tabs: const [
+            Tab(text: 'Freelancers'),
+            Tab(text: 'Products'),
+            Tab(text: 'Services'),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          _buildFreelancersTab(),
+          _buildProductsTab(),
+          _buildServicesTab(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        backgroundColor: const Color(0xFF6C63FF),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text(
+          'Start Selling',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFreelancersTab() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        final services = ['UI/UX Design', 'Web Development', 'Content Writing', 'Video Editing', 'SEO Marketing'];
+        final prices = ['\$50/hr', '\$75/hr', '\$30/hr', '\$40/hr', '\$45/hr'];
+        final ratings = ['4.9', '5.0', '4.8', '4.7', '4.9'];
+        
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: const Color(0xFF6C63FF),
+                    child: Text(
+                      'F${index + 1}',
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Freelancer ${index + 1}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            if (index % 3 == 0)
+                              const Icon(Icons.verified, size: 16, color: Colors.blue),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          services[index % services.length],
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            const Icon(Icons.star, size: 14, color: Color(0xFFFFD700)),
+                            const SizedBox(width: 4),
+                            Text(
+                              '${ratings[index % ratings.length]} (${50 + index * 10} reviews)',
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    prices[index % prices.length],
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF6C63FF),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Professional designer with 5+ years experience. Specialized in mobile apps and web design. Fast delivery guaranteed.',
+                style: TextStyle(fontSize: 13, color: Colors.black87),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.chat, size: 18),
+                      label: const Text('Chat'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF6C63FF),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.work, size: 18),
+                      label: const Text('Hire'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF6C63FF),
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildProductsTab() {
+    return GridView.builder(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.75,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
+      itemCount: 20,
+      itemBuilder: (context, index) {
+        final products = ['Wireless Headphones', 'Smart Watch', 'Laptop Stand', 'Phone Case', 'USB Cable'];
+        final prices = ['\$79.99', '\$199.99', '\$34.99', '\$14.99', '\$9.99'];
+        
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.inventory_2_outlined,
+                      size: 60,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      products[index % products.length],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        const Icon(Icons.star, size: 14, color: Color(0xFFFFD700)),
+                        const SizedBox(width: 4),
+                        Text(
+                          '4.${5 + (index % 4)}',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        const Spacer(),
+                        Text(
+                          prices[index % prices.length],
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF6C63FF),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildServicesTab() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        final services = [
+          'Professional Logo Design',
+          'Website Development',
+          'Social Media Marketing',
+          'Video Production',
+          'SEO Optimization',
+        ];
+        final descriptions = [
+          'Custom logo design with unlimited revisions',
+          'Full-stack web development from scratch',
+          'Grow your brand with targeted campaigns',
+          'Professional video editing and effects',
+          'Rank higher on search engines',
+        ];
+        final prices = ['Starting at \$150', 'Starting at \$500', 'Starting at \$200', 'Starting at \$300', 'Starting at \$250'];
+        
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF6C63FF).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.design_services,
+                  size: 40,
+                  color: Color(0xFF6C63FF),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      services[index % services.length],
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      descriptions[index % descriptions.length],
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.verified_user, size: 14, color: Colors.green),
+                        const SizedBox(width: 4),
+                        Text(
+                          prices[index % prices.length],
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF6C63FF),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

@@ -1,1 +1,256 @@
-import 'package:flutter/material.dart';\n\nclass PayScreen extends StatelessWidget {\n  const PayScreen({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return Scaffold(\n      appBar: AppBar(\n        title: const Text('Nexora Pay'),\n        actions: [\n          IconButton(\n            icon: const Icon(Icons.notifications_outlined),\n            onPressed: () {},\n          ),\n          IconButton(\n            icon: const Icon(Icons.history),\n            onPressed: () {},\n          ),\n        ],\n      ),\n      body: SingleChildScrollView(\n        child: Padding(\n          padding: const EdgeInsets.all(16.0),\n          child: Column(\n            crossAxisAlignment: CrossAxisAlignment.start,\n            children: [\n              // Balance Card\n              Container(\n                width: double.infinity,\n                padding: const EdgeInsets.all(24),\n                decoration: BoxDecoration(\n                  gradient: const LinearGradient(\n                    colors: [Color(0xFF6C63FF), Color(0xFF03DAC6)],\n                    begin: Alignment.topLeft,\n                    end: Alignment.bottomRight,\n                  ),\n                  borderRadius: BorderRadius.circular(20),\n                  boxShadow: [\n                    BoxShadow(\n                      color: const Color(0xFF6C63FF).withOpacity(0.3),\n                      blurRadius: 15,\n                      offset: const Offset(0, 8),\n                    ),\n                  ],\n                ),\n                child: Column(\n                  crossAxisAlignment: CrossAxisAlignment.start,\n                  children: [\n                    const Text(\n                      'Total Balance',\n                      style: TextStyle(\n                        color: Colors.white70,\n                        fontSize: 14,\n                      ),\n                    ),\n                    const SizedBox(height: 8),\n                    const Text(\n                      '\$4,582.50',\n                      style: TextStyle(\n                        color: Colors.white,\n                        fontSize: 36,\n                        fontWeight: FontWeight.bold,\n                      ),\n                    ),\n                    const SizedBox(height: 4),\n                    Row(\n                      children: [\n                        Container(\n                          padding: const EdgeInsets.symmetric(\n                            horizontal: 8,\n                            vertical: 4,\n                          ),\n                          decoration: BoxDecoration(\n                            color: Colors.white.withOpacity(0.2),\n                            borderRadius: BorderRadius.circular(12),\n                          ),\n                          child: const Text(\n                            '+ 1,250 Coins',\n                            style: TextStyle(\n                              color: Colors.white,\n                              fontSize: 12,\n                            ),\n                          ),\n                        ),\n                      ],\n                    ),\n                  ],\n                ),\n              ),\n              const SizedBox(height: 24),\n              // Quick Actions\n              Row(\n                mainAxisAlignment: MainAxisAlignment.spaceEvenly,\n                children: [\n                  _buildQuickAction(Icons.send, 'Send', Colors.blue),\n                  _buildQuickAction(Icons.call_received, 'Receive', Colors.green),\n                  _buildQuickAction(Icons.account_balance, 'Withdraw', Colors.orange),\n                  _buildQuickAction(Icons.qr_code_scanner, 'Scan', Colors.purple),\n                ],\n              ),\n              const SizedBox(height: 32),\n              // Payment Methods\n              const Text(\n                'Payment Methods',\n                style: TextStyle(\n                  fontSize: 18,\n                  fontWeight: FontWeight.bold,\n                ),\n              ),\n              const SizedBox(height: 16),\n              _buildPaymentMethod('M-Pesa', Icons.phone_android, Colors.green),\n              _buildPaymentMethod('PayPal', Icons.payment, Colors.blue),\n              _buildPaymentMethod('Visa Card', Icons.credit_card, Colors.orange),\n              _buildPaymentMethod('Crypto Wallet', Icons.currency_bitcoin, Colors.purple),\n              const SizedBox(height: 32),\n              // Recent Transactions\n              Row(\n                mainAxisAlignment: MainAxisAlignment.spaceBetween,\n                children: [\n                  const Text(\n                    'Recent Transactions',\n                    style: TextStyle(\n                      fontSize: 18,\n                      fontWeight: FontWeight.bold,\n                    ),\n                  ),\n                  TextButton(\n                    onPressed: () {},\n                    child: const Text('See All'),\n                  ),\n                ],\n              ),\n              const SizedBox(height: 12),\n              _buildTransaction('Payment to Sarah', '-\$125.00', Icons.arrow_upward, Colors.red),\n              _buildTransaction('Received from John', '+\$450.00', Icons.arrow_downward, Colors.green),\n              _buildTransaction('Freelance Project', '+\$1,250.00', Icons.work, Colors.green),\n              _buildTransaction('Video Ad Earnings', '+\$45.50', Icons.video_library, Colors.green),\n            ],\n          ),\n        ),\n      ),\n    );\n  }\n\n  Widget _buildQuickAction(IconData icon, String label, Color color) {\n    return Column(\n      children: [\n        Container(\n          width: 60,\n          height: 60,\n          decoration: BoxDecoration(\n            color: color.withOpacity(0.1),\n            borderRadius: BorderRadius.circular(15),\n          ),\n          child: Icon(icon, color: color, size: 28),\n        ),\n        const SizedBox(height: 8),\n        Text(\n          label,\n          style: const TextStyle(fontSize: 12),\n        ),\n      ],\n    );\n  }\n\n  Widget _buildPaymentMethod(String name, IconData icon, Color color) {\n    return Container(\n      margin: const EdgeInsets.only(bottom: 12),\n      padding: const EdgeInsets.all(16),\n      decoration: BoxDecoration(\n        color: Colors.grey[50],\n        borderRadius: BorderRadius.circular(12),\n        border: Border.all(color: Colors.grey[200]!),\n      ),\n      child: Row(\n        children: [\n          Container(\n            padding: const EdgeInsets.all(10),\n            decoration: BoxDecoration(\n              color: color.withOpacity(0.1),\n              borderRadius: BorderRadius.circular(10),\n            ),\n            child: Icon(icon, color: color, size: 24),\n          ),\n          const SizedBox(width: 16),\n          Expanded(\n            child: Text(\n              name,\n              style: const TextStyle(\n                fontSize: 16,\n                fontWeight: FontWeight.w500,\n              ),\n            ),\n          ),\n          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),\n        ],\n      ),\n    );\n  }\n\n  Widget _buildTransaction(String title, String amount, IconData icon, Color color) {\n    return Container(\n      margin: const EdgeInsets.only(bottom: 12),\n      padding: const EdgeInsets.all(12),\n      decoration: BoxDecoration(\n        color: Colors.white,\n        borderRadius: BorderRadius.circular(12),\n        border: Border.all(color: Colors.grey[200]!),\n      ),\n      child: Row(\n        children: [\n          Container(\n            padding: const EdgeInsets.all(8),\n            decoration: BoxDecoration(\n              color: color.withOpacity(0.1),\n              borderRadius: BorderRadius.circular(8),\n            ),\n            child: Icon(icon, color: color, size: 20),\n          ),\n          const SizedBox(width: 12),\n          Expanded(\n            child: Column(\n              crossAxisAlignment: CrossAxisAlignment.start,\n              children: [\n                Text(\n                  title,\n                  style: const TextStyle(\n                    fontSize: 14,\n                    fontWeight: FontWeight.w500,\n                  ),\n                ),\n                const SizedBox(height: 2),\n                Text(\n                  'Today, 2:30 PM',\n                  style: TextStyle(\n                    fontSize: 12,\n                    color: Colors.grey[600],\n                  ),\n                ),\n              ],\n            ),\n          ),\n          Text(\n            amount,\n            style: TextStyle(\n              fontSize: 16,\n              fontWeight: FontWeight.bold,\n              color: color,\n            ),\n          ),\n        ],\n      ),\n    );\n  }\n}\n
+import 'package:flutter/material.dart';
+
+class PayScreen extends StatelessWidget {
+  const PayScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Nexora Pay'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.history),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Balance Card
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF6C63FF), Color(0xFF03DAC6)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF6C63FF).withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Total Balance',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      '\$4,582.50',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text(
+                            '+ 1,250 Coins',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Quick Actions
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildQuickAction(Icons.send, 'Send', Colors.blue),
+                  _buildQuickAction(Icons.call_received, 'Receive', Colors.green),
+                  _buildQuickAction(Icons.account_balance, 'Withdraw', Colors.orange),
+                  _buildQuickAction(Icons.qr_code_scanner, 'Scan', Colors.purple),
+                ],
+              ),
+              const SizedBox(height: 32),
+              // Payment Methods
+              const Text(
+                'Payment Methods',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildPaymentMethod('M-Pesa', Icons.phone_android, Colors.green),
+              _buildPaymentMethod('PayPal', Icons.payment, Colors.blue),
+              _buildPaymentMethod('Visa Card', Icons.credit_card, Colors.orange),
+              _buildPaymentMethod('Crypto Wallet', Icons.currency_bitcoin, Colors.purple),
+              const SizedBox(height: 32),
+              // Recent Transactions
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Recent Transactions',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('See All'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              _buildTransaction('Payment to Sarah', '-\$125.00', Icons.arrow_upward, Colors.red),
+              _buildTransaction('Received from John', '+\$450.00', Icons.arrow_downward, Colors.green),
+              _buildTransaction('Freelance Project', '+\$1,250.00', Icons.work, Colors.green),
+              _buildTransaction('Video Ad Earnings', '+\$45.50', Icons.video_library, Colors.green),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuickAction(IconData icon, String label, Color color) {
+    return Column(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Icon(icon, color: color, size: 28),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPaymentMethod(String name, IconData icon, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              name,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTransaction(String title, String amount, IconData icon, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, color: color, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'Today, 2:30 PM',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Text(
+            amount,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
