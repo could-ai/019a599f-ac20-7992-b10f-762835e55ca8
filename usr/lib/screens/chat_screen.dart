@@ -33,7 +33,7 @@ class ChatScreen extends StatelessWidget {
             title: Text('User ${index + 1}'),
             subtitle: Row(
               children: [
-                if (index % 3 == 0) ..[
+                if (index % 3 == 0) ...[
                   const Icon(Icons.lock, size: 14, color: Colors.green),
                   const SizedBox(width: 4),
                 ],
@@ -55,7 +55,7 @@ class ChatScreen extends StatelessWidget {
                   '${index + 9}:${30 + index} AM',
                   style: const TextStyle(fontSize: 11, color: Colors.grey),
                 ),
-                if (index % 3 != 0) ..[
+                if (index % 3 != 0) ...[
                   const SizedBox(height: 4),
                   Container(
                     padding: const EdgeInsets.all(6),
