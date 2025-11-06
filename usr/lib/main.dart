@@ -1,1 +1,38 @@
-import 'package:flutter/material.dart';\nimport 'screens/home_screen.dart';\n\nvoid main() {\n  runApp(const NexoraApp());\n}\n\nclass NexoraApp extends StatelessWidget {\n  const NexoraApp({super.key});\n\n  @override\n  Widget build(BuildContext context) {\n    return MaterialApp(\n      title: 'Nexora',\n      debugShowCheckedModeBanner: false,\n      theme: ThemeData(\n        colorScheme: ColorScheme.fromSeed(\n          seedColor: const Color(0xFF6C63FF),\n          primary: const Color(0xFF6C63FF),\n          secondary: const Color(0xFF03DAC6),\n        ),\n        useMaterial3: true,\n        scaffoldBackgroundColor: Colors.white,\n        appBarTheme: const AppBarTheme(\n          backgroundColor: Colors.white,\n          elevation: 0,\n          iconTheme: IconThemeData(color: Colors.black),\n          titleTextStyle: TextStyle(\n            color: Colors.black,\n            fontSize: 20,\n            fontWeight: FontWeight.bold,\n          ),\n        ),\n      ),\n      home: const HomeScreen(),\n    );\n  }\n}\n
+import 'package:flutter/material.dart';
+import 'screens/home_screen.dart';
+
+void main() {
+  runApp(const NexoraApp());
+}
+
+class NexoraApp extends StatelessWidget {
+  const NexoraApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Nexora',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6C63FF),
+          primary: const Color(0xFF6C63FF),
+          secondary: const Color(0xFF03DAC6),
+        ),
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
